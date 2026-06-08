@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans, system-ui, sans-serif); background: transparent; color: var(--color-text-primary); }
+
+.dash { padding: 0 0 2.5rem; }
+
+/* ── Header ─────────────────────────────────── */
+.page-header {
+  background: #1B3A6B;
+  border-radius: var(--border-radius-lg);
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.header-left { display: flex; align-items: center; gap: 14px; }
+.header-icon {
+  width: 40px; height: 40px;
+  background: rgba(255,255,255,0.12);
+  border-radius: var(--border-radius-md);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.header-icon i { font-size: 20px; color: #fff; }
+.header-title { font-size: 17px; font-weight: 500; color: #fff; line-height: 1.2; }
+.header-sub { font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+.header-badge {
+  background: rgba(255,255,255,0.12);
+  border: 0.5px solid rgba(255,255,255,0.2);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.8);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Section wrapper ─────────────────────────── */
+.section {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+  background: var(--color-background-secondary);
+}
+.section-head-left { display: flex; align-items: center; gap: 10px; }
+.section-head-icon { font-size: 15px; color: #1B3A6B; }
+.section-head-title { font-size: 13px; font-weight: 500; }
+.section-head-sub { font-size: 11px; color: var(--color-text-tertiary); }
+.section-body { padding: 16px 18px; }
+
+/* ── KPI cards ───────────────────────────────── */
+.kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; }
+.kpi {
+  border-radius: var(--border-radius-md);
+  padding: 14px 16px;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: border-color .15s;
+  position: relative;
+}
+.kpi-navy   { background: #EBF0F8; }
+.kpi-teal   { background: #E6F3F7; }
+.kpi-amber  { background: #FDF4E3; }
+.kpi-green  { background: #ECF4E6; }
+.kpi:hover        { border-color: rgba(0,0,0,0.12); }
+.kpi.active       { border-color: #1B3A6B; }
+.kpi-icon { font-size: 15px; margin-bottom: 8px; display: block; }
+.kpi-navy  .kpi-icon { color: #1B3A6B; }
+.kpi-teal  .kpi-icon { color: #2E7D9A; }
+.kpi-amber .kpi-icon { color: #C8860A; }
+.kpi-green .kpi-icon { color: #3B6D11; }
+.kpi-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: var(--color-text-secondary); margin-bottom: 5px; }
+.kpi-value { font-size: 30px; font-weight: 500; line-height: 1; margin-bottom: 4px; }
+.kpi-navy  .kpi-value { color: #1B3A6B; }
+.kpi-teal  .kpi-value { color: #2E7D9A; }
+.kpi-amber .kpi-value { color: #C8860A; }
+.kpi-green .kpi-value { color: #3B6D11; }
+.kpi-sub { font-size: 11px; color: var(--color-text-tertiary); }
+.click-hint { position: absolute; bottom: 10px; right: 12px; font-size: 10px; color: var(--color-text-tertiary); opacity: 0; transition: opacity .15s; }
+.kpi:hover .click-hint { opacity: 1; }
+
+/* ── Detail panel ───────────────────────────── */
+.detail-panel { display: none; border-top: 0.5px solid var(--color-border-tertiary); background: var(--color-background-secondary); padding: 14px 18px; animation: slideIn .15s ease; }
+@keyframes slideIn { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:translateY(0); } }
+.detail-panel.open { display: block; }
+.detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.detail-title { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: .05em; }
+.detail-close { background: none; border: none; cursor: pointer; color: var(--color-text-secondary); font-size: 15px; padding: 2px 6px; border-radius: 4px; }
+.detail-close:hover { background: var(--color-border-tertiary); }
+.detail-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.detail-table th { text-align: left; padding: 5px 10px; color: var(--color-text-tertiary); font-size: 10px; text-transform: uppercase; letter-spacing: .05em; font-weight: 500; border-bottom: 0.5px solid var(--color-border-secondary); }
+.detail-table td { padding: 7px 10px; border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 12px; }
+.detail-table tr:last-child td { border-bottom: none; }
+.detail-table .total-row td { font-weight: 500; }
+.bar-cell { display: flex; align-items: center; gap: 8px; }
+.mini-bar { flex: 1; height: 4px; background: var(--color-border-tertiary); border-radius: 2px; overflow: hidden; }
+.mini-bar-fill { height: 100%; border-radius: 2px; }
+.fill-navy  { background: #1B3A6B; }
+.fill-teal  { background: #2E7D9A; }
+.fill-amber { background: #C8860A; }
+.fill-green { background: #3B6D11; }
+
+/* ── Filters ─────────────────────────────────── */
+.filters {
+  display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+}
+.filter-label { font-size: 12px; color: var(--color-text-secondary); white-space: nowrap; }
+.filters select, .filters input[type="date"] {
+  font-size: 12px; padding: 5px 9px;
+  border-radius: var(--border-radius-md);
+  border: 0.5px solid var(--color-border-secondary);
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
+  height: 30px;
+}
+.filter-sep { width: 0.5px; height: 16px; background: var(--color-border-secondary); margin: 0 2px; flex-shrink: 0; }
+.filter-pill { margin-left: auto; font-size: 11px; color: var(--color-text-tertiary); background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: 20px; padding: 3px 10px; white-space: nowrap; }
+
+/* ── Webinar cards ───────────────────────────── */
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(205px, 1fr)); gap: 10px; }
+.wcard {
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  background: var(--color-background-primary);
+  transition: border-color .15s;
+  display: flex; flex-direction: column;
+}
+.wcard:hover { border-color: var(--color-border-secondary); }
+.wcard-stripe { height: 3px; }
+.stripe-in   { background: #1B3A6B; }
+.stripe-pt   { background: #3B6D11; }
+.stripe-bp   { background: #C8860A; }
+.wcard-body { padding: 12px 14px; flex: 1; display: flex; flex-direction: column; }
+.wcard-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; gap: 6px; }
+.wcard-name { font-size: 13px; font-weight: 500; line-height: 1.3; flex: 1; }
+.type-pill { font-size: 10px; font-weight: 500; padding: 2px 7px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
+.pill-in { background: #E9EFF8; color: #1B3A6B; }
+.pill-pt { background: #ECF4E6; color: #3B6D11; }
+.pill-bp { background: #FDF4E3; color: #854F0B; }
+.wcard-date { font-size: 10px; color: var(--color-text-tertiary); margin-bottom: 12px; }
+.metric-row { display: grid; grid-template-columns: 1fr 1fr 1fr; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); overflow: hidden; margin-bottom: 10px; }
+.metric-cell { padding: 8px 4px; text-align: center; }
+.metric-cell + .metric-cell { border-left: 0.5px solid var(--color-border-tertiary); }
+.metric-num { font-size: 20px; font-weight: 500; line-height: 1; }
+.metric-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: .04em; color: var(--color-text-tertiary); margin-top: 2px; }
+.num-att  { color: #1B3A6B; }
+.num-hr   { color: #2E7D9A; }
+.num-beta { color: #C8860A; }
+.num-na   { color: var(--color-text-tertiary); font-size: 15px; }
+.rate-row { margin-bottom: 10px; }
+.rate-track { height: 4px; background: var(--color-background-secondary); border-radius: 2px; overflow: hidden; margin-bottom: 3px; }
+.rate-fill { height: 100%; background: #1B3A6B; opacity: .65; border-radius: 2px; }
+.rate-text { font-size: 10px; color: var(--color-text-tertiary); }
+.focus-block { padding-top: 9px; border-top: 0.5px solid var(--color-border-tertiary); margin-top: auto; }
+.focus-lbl { font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: var(--color-text-tertiary); margin-bottom: 3px; }
+.focus-text { font-size: 11px; color: var(--color-text-secondary); line-height: 1.5; }
+.no-results { text-align: center; padding: 2rem; color: var(--color-text-secondary); font-size: 13px; }
+
+/* ── Chart ───────────────────────────────────── */
+.chart-legend { display: flex; gap: 14px; font-size: 11px; color: var(--color-text-secondary); flex-wrap: wrap; }
+.leg-swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; margin-right: 4px; vertical-align: middle; }
+.leg-line { width: 16px; height: 0; border-top: 2px dashed #2E7D9A; display: inline-block; margin-right: 4px; vertical-align: middle; }
+.chart-note { font-size: 10px; color: var(--color-text-tertiary); text-align: center; margin-top: 10px; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+</head>
+<body>
+<div class="dash">
+
+<!-- Header -->
+<div class="page-header">
+  <div class="header-left">
+    <div class="header-icon"><i class="ti ti-chart-bar" aria-hidden="true"></i></div>
+    <div>
+      <div class="header-title">Netchex webinar program</div>
+      <div class="header-sub">Inside Netchex &nbsp;·&nbsp; Product Trainings &nbsp;·&nbsp; Big Picture &nbsp;·&nbsp; Click any metric to drill down</div>
+    </div>
+  </div>
+  <div class="header-badge" id="headerBadge">May 2026</div>
+</div>
+
+<!-- KPIs -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-head-left">
+      <i class="ti ti-layout-grid section-head-icon" aria-hidden="true"></i>
+      <span class="section-head-title">Program at a glance</span>
+    </div>
+    <span class="section-head-sub" id="kpiSub">—</span>
+  </div>
+  <div class="section-body">
+    <div class="kpi-grid">
+      <div class="kpi kpi-navy" data-kpi="att" onclick="toggleDetail('att')">
+        <i class="ti ti-users kpi-icon" aria-hidden="true"></i>
+        <div class="kpi-label">Attendees</div>
+        <div class="kpi-value" id="kv-att">—</div>
+        <div class="kpi-sub" id="ks-att">—</div>
+        <span class="click-hint">breakdown ↓</span>
+      </div>
+      <div class="kpi kpi-teal" data-kpi="hr" onclick="toggleDetail('hr')">
+        <i class="ti ti-hand-finger kpi-icon" aria-hidden="true"></i>
+        <div class="kpi-label">Handraisers</div>
+        <div class="kpi-value" id="kv-hr">—</div>
+        <div class="kpi-sub" id="ks-hr">cross-sell signals</div>
+        <span class="click-hint">breakdown ↓</span>
+      </div>
+      <div class="kpi kpi-amber" data-kpi="beta" onclick="toggleDetail('beta')">
+        <i class="ti ti-flask kpi-icon" aria-hidden="true"></i>
+        <div class="kpi-label">Beta sign-ups</div>
+        <div class="kpi-value" id="kv-beta">—</div>
+        <div class="kpi-sub" id="ks-beta">feature activations</div>
+        <span class="click-hint">breakdown ↓</span>
+      </div>
+      <div class="kpi kpi-green" data-kpi="reg" onclick="toggleDetail('reg')">
+        <i class="ti ti-clipboard-list kpi-icon" aria-hidden="true"></i>
+        <div class="kpi-label">Registrations</div>
+        <div class="kpi-value" id="kv-reg">—</div>
+        <div class="kpi-sub" id="ks-reg">attend. rate: —</div>
+        <span class="click-hint">breakdown ↓</span>
+      </div>
+    </div>
+    <div class="detail-panel" id="detailPanel">
+      <div class="detail-header">
+        <span class="detail-title" id="detailTitle"></span>
+        <button class="detail-close" onclick="closeDetail()" aria-label="Close">✕</button>
+      </div>
+      <table class="detail-table" id="detailTable"></table>
+    </div>
+  </div>
+</div>
+
+<!-- Filters + Cards -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-head-left">
+      <i class="ti ti-layout-cards section-head-icon" aria-hidden="true"></i>
+      <span class="section-head-title">Webinar results</span>
+    </div>
+    <div class="filters">
+      <span class="filter-label">Type</span>
+      <select id="typeFilter" onchange="applyFilters()">
+        <option value="all">All types</option>
+        <option value="Inside Netchex">Inside Netchex</option>
+        <option value="Product Training">Product Training</option>
+        <option value="Big Picture">Big Picture</option>
+      </select>
+      <div class="filter-sep"></div>
+      <span class="filter-label">From</span>
+      <input type="date" id="dateFrom" onchange="applyFilters()" value="2026-05-01">
+      <span class="filter-label">to</span>
+      <input type="date" id="dateTo" onchange="applyFilters()" value="2026-05-31">
+      <span class="filter-pill" id="filterCount"></span>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="cards-grid" id="cardsGrid"></div>
+  </div>
+</div>
+
+<!-- Trend chart -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-head-left">
+      <i class="ti ti-trending-up section-head-icon" aria-hidden="true"></i>
+      <span class="section-head-title">Trends over time</span>
+    </div>
+    <div class="chart-legend">
+      <span><span class="leg-swatch" style="background:#1B3A6B;"></span>Attendees</span>
+      <span><span class="leg-line"></span>Handraisers</span>
+      <span><span class="leg-swatch" style="background:#C8860A;"></span>Beta sign-ups</span>
+    </div>
+  </div>
+  <div class="section-body">
+    <div style="position:relative;width:100%;height:230px;">
+      <canvas id="trendChart" role="img" aria-label="Bar and line chart showing attendees, handraisers, and beta sign-ups per webinar.">Attendees, handraisers, and beta sign-ups per webinar.</canvas>
+    </div>
+    <div class="chart-note" id="chartNote"></div>
+  </div>
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
+<script>
+const ALL_DATA = [
+  { name:"Hire & Onboard",       type:"Inside Netchex",  date:"2026-05-12", reg:244, att:119, hr:14, beta:63, focus:"Recruit, The Work Number, E-Verify, Onboarding, Org Charts" },
+  { name:"Pay & Time",           type:"Inside Netchex",  date:"2026-05-14", reg:185, att:74,  hr:12, beta:11, focus:"Payroll/OneScreen, Time & Attendance, Scheduler, Clock, POS Integrations, 401k" },
+  { name:"Benefits",             type:"Inside Netchex",  date:"2026-05-19", reg:157, att:46,  hr:5,  beta:0,  focus:"EE Navigator, NetBen, COBRA, NetEnroll, EWA, Paycards, Buy Now Pay Later" },
+  { name:"Perform & Manage",     type:"Inside Netchex",  date:"2026-05-21", reg:157, att:38,  hr:3,  beta:3,  focus:"Performance, Learn, Compensation Management, Violation Points, Disciplinary Actions" },
+  { name:"Engage & Retain",      type:"Inside Netchex",  date:"2026-05-26", reg:153, att:24,  hr:7,  beta:0,  focus:"Rewards & Recognition, Announcements, Conversations/Chat, Surveys, Anonymous Reporting" },
+  { name:"HR & Compliance Ops",  type:"Inside Netchex",  date:"2026-05-28", reg:189, att:36,  hr:0,  beta:8,  focus:"FMLA, Report Builder, Handbook Mgmt" },
+  { name:"Report Builder",       type:"Product Training", date:"2026-05-22", reg:115, att:53,  hr:33, beta:0,  focus:"Report Builder, Publisher Migration, GL Reports" },
+  { name:"Scheduler",            type:"Product Training", date:"2026-05-27", reg:null,att:null,hr:0,  beta:0,  focus:"Scheduler" },
+  { name:"Big Picture Client",   type:"Big Picture",      date:"2026-05-29", reg:31,  att:13,  hr:3,  beta:0,  focus:"Full Platform Overview, Cross-sell" },
+];
+
+let filtered = [...ALL_DATA];
+let activeKpi = null;
+let trendChart = null;
+
+const FILLS = { att:'fill-navy', hr:'fill-teal', beta:'fill-amber', reg:'fill-green' };
+
+function applyFilters() {
+  const type = document.getElementById('typeFilter').value;
+  const from = document.getElementById('dateFrom').value;
+  const to   = document.getElementById('dateTo').value;
+  filtered = ALL_DATA.filter(w =>
+    (type === 'all' || w.type === type) &&
+    (!from || w.date >= from) &&
+    (!to   || w.date <= to)
+  );
+  renderKPIs(); renderCards(); renderChart();
+  const n = filtered.length, T = ALL_DATA.length;
+  document.getElementById('filterCount').textContent = n === T ? 'All ' + T : n + ' of ' + T + ' webinars';
+  if (activeKpi) renderDetailTable(activeKpi);
+  const months = [...new Set(filtered.map(w=>w.date.slice(0,7)))];
+  document.getElementById('headerBadge').textContent = months.length === 1 ? fmtMonth(months[0]) : months.length + ' months';
+}
+
+function fmtMonth(ym) {
+  const d = new Date(ym+'-15');
+  return d.toLocaleDateString('en-US',{month:'long',year:'numeric'});
+}
+
+function renderKPIs() {
+  const att  = filtered.reduce((s,w)=>s+(w.att||0),0);
+  const hr   = filtered.reduce((s,w)=>s+(w.hr||0),0);
+  const beta = filtered.reduce((s,w)=>s+(w.beta||0),0);
+  const reg  = filtered.reduce((s,w)=>s+(w.reg||0),0);
+  const rate = reg > 0 ? Math.round(att/reg*100) : 0;
+  const n    = filtered.length;
+  document.getElementById('kv-att').textContent  = att.toLocaleString();
+  document.getElementById('kv-hr').textContent   = hr.toLocaleString();
+  document.getElementById('kv-beta').textContent = beta.toLocaleString();
+  document.getElementById('kv-reg').textContent  = reg.toLocaleString();
+  document.getElementById('ks-att').textContent  = n + ' webinar' + (n!==1?'s':'');
+  document.getElementById('ks-reg').textContent  = 'attend. rate: ' + rate + '%';
+  document.getElementById('kpiSub').textContent  = n + ' webinar' + (n!==1?'s':'') + ' in view';
+}
+
+function typePill(t) {
+  if (t==='Inside Netchex')   return '<span class="type-pill pill-in">Inside Netchex</span>';
+  if (t==='Product Training') return '<span class="type-pill pill-pt">Product Training</span>';
+  return '<span class="type-pill pill-bp">Big Picture</span>';
+}
+function stripeClass(t) {
+  if (t==='Inside Netchex')   return 'stripe-in';
+  if (t==='Product Training') return 'stripe-pt';
+  return 'stripe-bp';
+}
+
+function renderCards() {
+  const grid = document.getElementById('cardsGrid');
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="no-results"><i class="ti ti-inbox" style="font-size:22px;display:block;margin-bottom:8px;"></i>No webinars match the current filters.</div>';
+    return;
+  }
+  grid.innerHTML = filtered.map(w => {
+    const rate = (w.reg && w.att) ? Math.round(w.att/w.reg*100) : null;
+    const ds = new Date(w.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    return `<div class="wcard">
+      <div class="wcard-stripe ${stripeClass(w.type)}"></div>
+      <div class="wcard-body">
+        <div class="wcard-top">
+          <div class="wcard-name">${w.name}</div>
+          ${typePill(w.type)}
+        </div>
+        <div class="wcard-date"><i class="ti ti-calendar" style="font-size:11px;vertical-align:-1px;margin-right:3px;" aria-hidden="true"></i>${ds}</div>
+        <div class="metric-row">
+          <div class="metric-cell">
+            <div class="metric-num num-att">${w.att!=null ? w.att : '<span class="num-na">—</span>'}</div>
+            <div class="metric-lbl">attendees</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-num num-hr">${w.hr}</div>
+            <div class="metric-lbl">handraisers</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-num num-beta">${w.beta}</div>
+            <div class="metric-lbl">beta</div>
+          </div>
+        </div>
+        <div class="rate-row">
+          ${rate != null
+            ? `<div class="rate-track"><div class="rate-fill" style="width:${rate}%"></div></div>
+               <div class="rate-text">${rate}% attendance rate &nbsp;·&nbsp; ${(w.reg||0).toLocaleString()} registered</div>`
+            : `<div class="rate-text" style="font-style:italic;">attendance data pending</div>`}
+        </div>
+        <div class="focus-block">
+          <div class="focus-lbl">products covered</div>
+          <div class="focus-text">${w.focus}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderDetailTable(kpi) {
+  const titles = { att:'Attendees breakdown', hr:'Handraisers breakdown', beta:'Beta sign-ups breakdown', reg:'Registrations breakdown' };
+  document.getElementById('detailTitle').textContent = titles[kpi];
+  const sorted = [...filtered].sort((a,b)=>(b[kpi]||0)-(a[kpi]||0));
+  const total  = filtered.reduce((s,w)=>s+(w[kpi]||0),0);
+  const fill   = FILLS[kpi];
+  document.getElementById('detailTable').innerHTML =
+    `<thead><tr><th>Webinar</th><th>Type</th><th style="text-align:right;padding-right:12px;">Count</th><th style="min-width:110px;">Share</th></tr></thead>
+    <tbody>` + sorted.map(w => {
+      const v = w[kpi]||0, p = total>0 ? Math.round(v/total*100) : 0;
+      return `<tr>
+        <td>${w.name}</td>
+        <td>${typePill(w.type)}</td>
+        <td style="text-align:right;padding-right:12px;font-weight:500;">${v}</td>
+        <td><div class="bar-cell"><div class="mini-bar"><div class="mini-bar-fill ${fill}" style="width:${p}%"></div></div>
+          <span style="font-size:11px;color:var(--color-text-tertiary);min-width:26px;">${p}%</span></div></td>
+      </tr>`;
+    }).join('') +
+    `<tr class="total-row"><td colspan="2" style="padding-left:10px;color:var(--color-text-secondary);">Total</td>
+      <td style="text-align:right;padding-right:12px;">${total.toLocaleString()}</td><td></td></tr></tbody>`;
+}
+
+function toggleDetail(kpi) {
+  if (activeKpi === kpi) { closeDetail(); return; }
+  activeKpi = kpi;
+  document.querySelectorAll('.kpi').forEach(c => c.classList.toggle('active', c.dataset.kpi===kpi));
+  renderDetailTable(kpi);
+  document.getElementById('detailPanel').classList.add('open');
+}
+function closeDetail() {
+  activeKpi = null;
+  document.getElementById('detailPanel').classList.remove('open');
+  document.querySelectorAll('.kpi').forEach(c=>c.classList.remove('active'));
+}
+
+function renderChart() {
+  const ctx = document.getElementById('trendChart').getContext('2d');
+  const s   = [...filtered].sort((a,b)=>a.date.localeCompare(b.date));
+  const labels   = s.map(w => new Date(w.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}) + ' · ' + w.name);
+  const attData  = s.map(w=>w.att||0);
+  const hrData   = s.map(w=>w.hr||0);
+  const betaData = s.map(w=>w.beta||0);
+  if (trendChart) trendChart.destroy();
+  trendChart = new Chart(ctx, {
+    type:'bar',
+    data:{ labels, datasets:[
+      { label:'Attendees',    data:attData,  backgroundColor:'rgba(27,58,107,.8)',  borderRadius:3, borderSkipped:false, order:2 },
+      { label:'Beta sign-ups',data:betaData, backgroundColor:'rgba(200,134,10,.75)',borderRadius:3, borderSkipped:false, order:3 },
+      { label:'Handraisers',  data:hrData,   type:'line', borderColor:'#2E7D9A',
+        backgroundColor:'transparent', borderWidth:2, borderDash:[5,4],
+        pointBackgroundColor:'#fff', pointBorderColor:'#2E7D9A', pointBorderWidth:2,
+        pointRadius:4, tension:0.35, fill:false, order:1, yAxisID:'y' },
+    ]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      interaction:{ mode:'index', intersect:false },
+      plugins:{
+        legend:{ display:false },
+        tooltip:{
+          backgroundColor:'rgba(255,255,255,.97)', titleColor:'#101828',
+          bodyColor:'#667085', borderColor:'rgba(0,0,0,0.1)', borderWidth:1,
+          padding:10, cornerRadius:8,
+          callbacks:{ title: items => items[0].label.split(' · ')[1] + ' (' + items[0].label.split(' · ')[0] + ')' }
+        }
+      },
+      scales:{
+        x:{ ticks:{ font:{size:10}, autoSkip:false, maxRotation:38, color:'#888',
+              callback:(v,i)=>labels[i].split(' · ')[0]+' '+labels[i].split(' · ')[1] },
+            grid:{ display:false } },
+        y:{ beginAtZero:true, border:{display:false},
+            grid:{ color:'rgba(0,0,0,0.05)' },
+            ticks:{ font:{size:11}, color:'#888' } }
+      },
+      layout:{ padding:{ top:4 } }
+    }
+  });
+  const months = [...new Set(s.map(w=>w.date.slice(0,7)))];
+  document.getElementById('chartNote').textContent = months.length===1
+    ? 'Showing ' + s.length + ' webinar' + (s.length!==1?'s':'') + ' · ' + fmtMonth(months[0]) + '  ·  Add future months to see trends develop'
+    : 'Showing ' + s.length + ' webinars across ' + months.length + ' months';
+}
+
+applyFilters();
+</script>
+</body>
+</html>
