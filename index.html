@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<script type="application/json" id="cowork-artifact-meta">
+<!DOCTYPE html><script type="application/json" id="cowork-artifact-meta">
 {
   "name": "Netchex Webinar Dashboard",
   "schemaVersion": 1,
@@ -321,6 +320,8 @@ const ALL_DATA = [
     betaProducts:[{product:"New Onboarding Experience",count:6},{product:"Pending Employee",count:6}] },
   { name:"June Pay & Time: Get Payroll Right Every Time", type:"Inside Netchex", date:"2026-06-11", reg:149, att:26, hr:2, beta:5, focus:"OneScreen Payroll, Payroll Enhancements, Time & Attendance, Scheduler, Manager Timecard Approval",
     betaProducts:[{product:"OneScreen Payroll & Payroll Enhancements",count:4},{product:"Timecard Approval / Manager Timecard Features",count:1}] },
+  { name:"June Benefits & Financial Wellness", type:"Inside Netchex", date:"2026-06-16", reg:149, att:23, hr:5, beta:2, focus:"Employee Navigator, NetBenefits, COBRA, ACA Compliance, Total Compensation Statements, EWA, Paycards, Buy Now Pay Later, 401K, NetEnroll",
+    betaProducts:[{product:"401K Integration (90+ Providers)",count:2}] },
 ];
 
 let filtered = [...ALL_DATA];
@@ -425,15 +426,12 @@ function renderCards() {
 }
 
 function renderDetailTable(kpi) {
-  // ── Beta: aggregate by product ───────────────────────────────────────────
   if (kpi === 'beta') {
     document.getElementById('detailTitle').textContent = 'Beta sign-ups by product';
-
     const productMap = {};
-    const productWebinars = {}; // track which webinars contribute to each product
+    const productWebinars = {};
     let noDetailCount = 0;
     let noDetailTotal = 0;
-
     filtered.forEach(w => {
       if (w.betaProducts && w.betaProducts.length > 0) {
         w.betaProducts.forEach(p => {
@@ -446,15 +444,12 @@ function renderDetailTable(kpi) {
         noDetailTotal += w.beta;
       }
     });
-
     const products = Object.entries(productMap).sort((a,b) => b[1] - a[1]);
     const maxCount = products.length > 0 ? products[0][1] : 1;
-
     let noteRow = '';
     if (noDetailCount > 0) {
       noteRow = `<tr><td colspan="3" class="detail-note">${noDetailTotal.toLocaleString()} additional sign-up${noDetailTotal!==1?'s':''} from ${noDetailCount} webinar${noDetailCount!==1?'s':''} without product-level breakdown</td></tr>`;
     }
-
     document.getElementById('detailTable').innerHTML =
       `<thead><tr><th>Product</th><th style="text-align:right;padding-right:12px;">Sign-ups</th><th style="min-width:110px;">Volume</th></tr></thead>
       <tbody>` +
@@ -478,8 +473,6 @@ function renderDetailTable(kpi) {
       `</tbody>`;
     return;
   }
-
-  // ── All other KPIs: by webinar ───────────────────────────────────────────
   const titles = { att:'Attendees breakdown', hr:'Handraisers breakdown', reg:'Registrations breakdown' };
   document.getElementById('detailTitle').textContent = titles[kpi];
   const sorted = [...filtered].sort((a,b)=>(b[kpi]||0)-(a[kpi]||0));
@@ -525,9 +518,9 @@ function renderChart() {
   trendChart = new Chart(ctx, {
     type:'bar',
     data:{ labels, datasets:[
-      { label:'Attendees',    data:attData,  backgroundColor:'rgba(27,58,107,.8)',  stack:'s', borderSkipped:false },
-      { label:'Handraisers',  data:hrData,   backgroundColor:'rgba(46,125,154,.85)', stack:'s', borderSkipped:false },
-      { label:'Beta sign-ups',data:betaData, backgroundColor:'rgba(200,134,10,.8)', stack:'s', borderSkipped:false },
+      { label:'Attendees',    data:attData,  backgroundColor:'rgba(27,58,107,.8)',   stack:'att',     borderSkipped:false },
+      { label:'Handraisers',  data:hrData,   backgroundColor:'rgba(46,125,154,.85)', stack:'signals', borderSkipped:false },
+      { label:'Beta sign-ups',data:betaData, backgroundColor:'rgba(200,134,10,.8)',  stack:'signals', borderSkipped:false },
     ]},
     options:{
       responsive:true, maintainAspectRatio:false,
