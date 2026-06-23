@@ -326,6 +326,7 @@ const ALL_DATA = [
     betaProducts:[{product:"Workflows",count:1}] },
   { name:"June: Manage & Develop: Better Managers, Better Teams", type:"Inside Netchex", date:"2026-06-18", reg:151, att:17, hr:5, beta:1, focus:"Performance, Coaching, Compensation Management, Violation Points, Disciplinary Actions, Reviews & Disciplinary Notes in Document Center",
     betaProducts:[{product:"Reviews & Disciplinary Notes in Document Center",count:1}] },
+  { name:"June: Engage & Retain", type:"Inside Netchex", date:"2026-06-23", reg:154, att:15, hr:4, beta:0, focus:"Rewards & Recognition, Announcements, Conversations/Chat, Surveys, Anonymous Reporting" },
 ];
 
 let filtered = [...ALL_DATA];
@@ -417,7 +418,7 @@ function renderCards() {
         <div class="rate-row">
           ${rate != null
             ? `<div class="rate-track"><div class="rate-fill" style="width:${rate}%"></div></div>
-               <div class="rate-text">${rate}% attendance rate &nbsp;·&nbsp; ${(w.reg||0).toLocaleString()} registered</div>`
+               <div class="rate-text">${rate}% attendance rate &nbsp;&middot;&nbsp; ${(w.reg||0).toLocaleString()} registered</div>`
             : `<div class="rate-text" style="font-style:italic;">attendance data pending</div>`}
         </div>
         <div class="focus-block">
