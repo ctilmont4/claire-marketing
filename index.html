@@ -2,7 +2,7 @@
 {
   "name": "Netchex Webinar Dashboard",
   "schemaVersion": 1,
-  "description": "Netchex Webinar Program dashboard — May–Jun 2026. KPI totals with drill-down, per-webinar cards, date/type filters, and trends chart. Beta sign-ups detail panel organized by product. Updated monthly as new data arrives."
+  "description": "Netchex Webinar Program dashboard — May–Jun 2026. KPI totals with drill-down, per-webinar cards, date/type filters, trends chart, and May-vs-June product interest tables (handraisers + beta sign-ups). 18 webinars total, including the previously-missing HR Ops & Compliance (6/25) and Product Training: AskHR (6/26)."
 }
 </script>
 <html lang="en">
@@ -10,56 +10,38 @@
 :root { color-scheme: light; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: var(--font-sans, system-ui, sans-serif); background: transparent; color: var(--color-text-primary); }
-
 .dash { padding: 0 0 2.5rem; }
 
 /* ── Header ─────────────────────────────────── */
 .page-header {
-  background: #1B3A6B;
-  border-radius: var(--border-radius-lg);
-  padding: 20px 24px;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  background: #1B3A6B; border-radius: var(--border-radius-lg);
+  padding: 20px 24px; margin-bottom: 20px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
 }
 .header-left { display: flex; align-items: center; gap: 14px; }
 .header-icon {
-  width: 40px; height: 40px;
-  background: rgba(255,255,255,0.12);
+  width: 40px; height: 40px; background: rgba(255,255,255,0.12);
   border-radius: var(--border-radius-md);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 .header-icon i { font-size: 20px; color: #fff; }
 .header-title { font-size: 17px; font-weight: 500; color: #fff; line-height: 1.2; }
 .header-sub { font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 2px; }
 .header-badge {
-  background: rgba(255,255,255,0.12);
-  border: 0.5px solid rgba(255,255,255,0.2);
-  border-radius: 20px;
-  padding: 5px 14px;
-  font-size: 12px;
-  color: rgba(255,255,255,0.8);
-  white-space: nowrap;
-  flex-shrink: 0;
+  background: rgba(255,255,255,0.12); border: 0.5px solid rgba(255,255,255,0.2);
+  border-radius: 20px; padding: 5px 14px; font-size: 12px;
+  color: rgba(255,255,255,0.8); white-space: nowrap; flex-shrink: 0;
 }
 
 /* ── Section wrapper ─────────────────────────── */
 .section {
   background: var(--color-background-primary);
   border: 0.5px solid var(--color-border-tertiary);
-  border-radius: var(--border-radius-lg);
-  margin-bottom: 12px;
-  overflow: hidden;
+  border-radius: var(--border-radius-lg); margin-bottom: 12px; overflow: hidden;
 }
 .section-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 18px;
-  border-bottom: 0.5px solid var(--color-border-tertiary);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 18px; border-bottom: 0.5px solid var(--color-border-tertiary);
   background: var(--color-background-secondary);
 }
 .section-head-left { display: flex; align-items: center; gap: 10px; }
@@ -71,36 +53,36 @@ body { font-family: var(--font-sans, system-ui, sans-serif); background: transpa
 /* ── KPI cards ───────────────────────────────── */
 .kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; }
 .kpi {
-  border-radius: var(--border-radius-md);
-  padding: 14px 16px;
-  cursor: pointer;
-  border: 1.5px solid transparent;
-  transition: border-color .15s;
-  position: relative;
+  border-radius: var(--border-radius-md); padding: 14px 16px;
+  cursor: pointer; border: 1.5px solid transparent; transition: border-color .15s; position: relative;
 }
-.kpi-navy   { background: #EBF0F8; }
-.kpi-teal   { background: #E6F3F7; }
-.kpi-amber  { background: #FDF4E3; }
-.kpi-green  { background: #ECF4E6; }
+.kpi-navy    { background: #EBF0F8; }
+.kpi-teal    { background: #E6F3F7; }
+.kpi-amber   { background: #FDF4E3; }
+.kpi-green   { background: #ECF4E6; }
 .kpi:hover        { border-color: rgba(0,0,0,0.12); }
 .kpi.active       { border-color: #1B3A6B; }
 .kpi-icon { font-size: 15px; margin-bottom: 8px; display: block; }
-.kpi-navy  .kpi-icon { color: #1B3A6B; }
-.kpi-teal  .kpi-icon { color: #2E7D9A; }
-.kpi-amber .kpi-icon { color: #C8860A; }
-.kpi-green .kpi-icon { color: #3B6D11; }
+.kpi-navy    .kpi-icon { color: #1B3A6B; }
+.kpi-teal    .kpi-icon { color: #2E7D9A; }
+.kpi-amber   .kpi-icon { color: #C8860A; }
+.kpi-green   .kpi-icon { color: #3B6D11; }
 .kpi-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: var(--color-text-secondary); margin-bottom: 5px; }
 .kpi-value { font-size: 30px; font-weight: 500; line-height: 1; margin-bottom: 4px; }
-.kpi-navy  .kpi-value { color: #1B3A6B; }
-.kpi-teal  .kpi-value { color: #2E7D9A; }
-.kpi-amber .kpi-value { color: #C8860A; }
-.kpi-green .kpi-value { color: #3B6D11; }
+.kpi-navy    .kpi-value { color: #1B3A6B; }
+.kpi-teal    .kpi-value { color: #2E7D9A; }
+.kpi-amber   .kpi-value { color: #C8860A; }
+.kpi-green   .kpi-value { color: #3B6D11; }
 .kpi-sub { font-size: 11px; color: var(--color-text-tertiary); }
 .click-hint { position: absolute; bottom: 10px; right: 12px; font-size: 10px; color: var(--color-text-tertiary); opacity: 0; transition: opacity .15s; }
 .kpi:hover .click-hint { opacity: 1; }
 
 /* ── Detail panel ───────────────────────────── */
-.detail-panel { display: none; border-top: 0.5px solid var(--color-border-tertiary); background: var(--color-background-secondary); padding: 14px 18px; animation: slideIn .15s ease; }
+.detail-panel {
+  display: none; border-top: 0.5px solid var(--color-border-tertiary);
+  background: var(--color-background-secondary); padding: 14px 18px;
+  animation: slideIn .15s ease;
+}
 @keyframes slideIn { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:translateY(0); } }
 .detail-panel.open { display: block; }
 .detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
@@ -115,25 +97,26 @@ body { font-family: var(--font-sans, system-ui, sans-serif); background: transpa
 .bar-cell { display: flex; align-items: center; gap: 8px; }
 .mini-bar { flex: 1; height: 4px; background: var(--color-border-tertiary); border-radius: 2px; overflow: hidden; }
 .mini-bar-fill { height: 100%; border-radius: 2px; }
-.fill-navy  { background: #1B3A6B; }
-.fill-teal  { background: #2E7D9A; }
-.fill-amber { background: #C8860A; }
-.fill-green { background: #3B6D11; }
+.fill-navy    { background: #1B3A6B; }
+.fill-teal    { background: #2E7D9A; }
+.fill-amber   { background: #C8860A; }
+.fill-green   { background: #3B6D11; }
 .detail-note { font-size: 11px; color: var(--color-text-tertiary); font-style: italic; padding: 8px 10px; }
 .product-tag { display: inline-block; background: #FDF4E3; color: #854F0B; border-radius: 4px; padding: 2px 7px; font-size: 11px; font-weight: 500; }
+.product-scroll { max-height: 360px; overflow-y: auto; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); }
+.product-scroll table.detail-table th { position: sticky; top: 0; background: var(--color-background-primary); }
+.cat-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: var(--color-text-secondary); margin-bottom: 6px; }
+.cat-sublabel { font-size: 11px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 5px; padding-left: 4px; border-left: 2px solid #1B3A6B; }
+.inn-group { margin-bottom: 14px; }
+.inn-group:last-child { margin-bottom: 0; }
 
 /* ── Filters ─────────────────────────────────── */
-.filters {
-  display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
-}
+.filters { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .filter-label { font-size: 12px; color: var(--color-text-secondary); white-space: nowrap; }
 .filters select, .filters input[type="date"] {
-  font-size: 12px; padding: 5px 9px;
-  border-radius: var(--border-radius-md);
+  font-size: 12px; padding: 5px 9px; border-radius: var(--border-radius-md);
   border: 0.5px solid var(--color-border-secondary);
-  background: var(--color-background-primary);
-  color: var(--color-text-primary);
-  height: 30px;
+  background: var(--color-background-primary); color: var(--color-text-primary); height: 30px;
 }
 .filter-sep { width: 0.5px; height: 16px; background: var(--color-border-secondary); margin: 0 2px; flex-shrink: 0; }
 .filter-pill { margin-left: auto; font-size: 11px; color: var(--color-text-tertiary); background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: 20px; padding: 3px 10px; white-space: nowrap; }
@@ -141,18 +124,15 @@ body { font-family: var(--font-sans, system-ui, sans-serif); background: transpa
 /* ── Webinar cards ───────────────────────────── */
 .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(205px, 1fr)); gap: 10px; }
 .wcard {
-  border: 0.5px solid var(--color-border-tertiary);
-  border-radius: var(--border-radius-lg);
-  overflow: hidden;
-  background: var(--color-background-primary);
-  transition: border-color .15s;
-  display: flex; flex-direction: column;
+  border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg);
+  overflow: hidden; background: var(--color-background-primary);
+  transition: border-color .15s; display: flex; flex-direction: column;
 }
 .wcard:hover { border-color: var(--color-border-secondary); }
 .wcard-stripe { height: 3px; }
-.stripe-in   { background: #1B3A6B; }
-.stripe-pt   { background: #3B6D11; }
-.stripe-bp   { background: #C8860A; }
+.stripe-in { background: #1B3A6B; }
+.stripe-pt { background: #3B6D11; }
+.stripe-bp { background: #C8860A; }
 .wcard-body { padding: 12px 14px; flex: 1; display: flex; flex-direction: column; }
 .wcard-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; gap: 6px; }
 .wcard-name { font-size: 13px; font-weight: 500; line-height: 1.3; flex: 1; }
@@ -183,7 +163,6 @@ body { font-family: var(--font-sans, system-ui, sans-serif); background: transpa
 /* ── Chart ───────────────────────────────────── */
 .chart-legend { display: flex; gap: 14px; font-size: 11px; color: var(--color-text-secondary); flex-wrap: wrap; }
 .leg-swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; margin-right: 4px; vertical-align: middle; }
-.leg-line { width: 16px; height: 0; border-top: 2px dashed #2E7D9A; display: inline-block; margin-right: 4px; vertical-align: middle; }
 .chart-note { font-size: 10px; color: var(--color-text-tertiary); text-align: center; margin-top: 10px; }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
@@ -250,6 +229,7 @@ body { font-family: var(--font-sans, system-ui, sans-serif); background: transpa
       </div>
       <table class="detail-table" id="detailTable"></table>
     </div>
+    <div class="chart-note" style="text-align:left;margin-top:10px;">For a detailed product-level breakout of handraisers and beta sign-ups by webinar, see the "Product interest" sections at the bottom of this dashboard.</div>
   </div>
 </div>
 
@@ -285,7 +265,7 @@ body { font-family: var(--font-sans, system-ui, sans-serif); background: transpa
 <div class="section">
   <div class="section-head">
     <div class="section-head-left">
-      <i class="ti ti-trending-up section-head-icon" aria-hidden="true"></i>
+      <i class="ti ti-chart-bar section-head-icon" aria-hidden="true"></i>
       <span class="section-head-title">Trends over time</span>
     </div>
     <div class="chart-legend">
@@ -296,9 +276,41 @@ body { font-family: var(--font-sans, system-ui, sans-serif); background: transpa
   </div>
   <div class="section-body">
     <div style="position:relative;width:100%;height:230px;">
-      <canvas id="trendChart" role="img" aria-label="Bar and line chart showing attendees, handraisers, and beta sign-ups per webinar.">Attendees, handraisers, and beta sign-ups per webinar.</canvas>
+      <canvas id="trendChart" role="img" aria-label="Bar chart showing attendees, handraisers, and beta sign-ups per webinar."></canvas>
     </div>
     <div class="chart-note" id="chartNote"></div>
+  </div>
+</div>
+
+<!-- Product interest: Handraisers -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-head-left">
+      <i class="ti ti-hand-finger section-head-icon" aria-hidden="true"></i>
+      <span class="section-head-title">Product interest — handraisers</span>
+    </div>
+    <span class="section-head-sub">By webinar category · May vs. June</span>
+  </div>
+  <div class="section-body">
+    <div style="margin-bottom:16px;"><div class="cat-label">Inside Netchex — broken out by webinar</div><div id="hrProductInsideNetchex"></div></div>
+    <div style="margin-bottom:16px;"><div class="cat-label">Product Training</div><div class="product-scroll"><table class="detail-table" id="hrProductTable-pt"></table></div></div>
+    <div><div class="cat-label">Big Picture</div><div class="product-scroll"><table class="detail-table" id="hrProductTable-bp"></table></div></div>
+  </div>
+</div>
+
+<!-- Product interest: Beta sign-ups -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-head-left">
+      <i class="ti ti-flask section-head-icon" aria-hidden="true"></i>
+      <span class="section-head-title">Product interest — beta sign-ups</span>
+    </div>
+    <span class="section-head-sub">By webinar category · May vs. June</span>
+  </div>
+  <div class="section-body">
+    <div style="margin-bottom:16px;"><div class="cat-label">Inside Netchex — broken out by webinar</div><div id="betaProductInsideNetchex"></div></div>
+    <div style="margin-bottom:16px;"><div class="cat-label">Product Training</div><div class="product-scroll"><table class="detail-table" id="betaProductTable-pt"></table></div></div>
+    <div><div class="cat-label">Big Picture</div><div class="product-scroll"><table class="detail-table" id="betaProductTable-bp"></table></div></div>
   </div>
 </div>
 
@@ -307,263 +319,297 @@ body { font-family: var(--font-sans, system-ui, sans-serif); background: transpa
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
 <script>
 const ALL_DATA = [
-  { name:"Hire & Onboard",       type:"Inside Netchex",  date:"2026-05-12", reg:244, att:119, hr:14, beta:63, focus:"Recruit, The Work Number, E-Verify, Onboarding, Org Charts" },
-  { name:"Pay & Time",           type:"Inside Netchex",  date:"2026-05-14", reg:185, att:74,  hr:12, beta:11, focus:"Payroll/OneScreen, Time & Attendance, Scheduler, Clock, POS Integrations, 401k" },
-  { name:"Benefits",             type:"Inside Netchex",  date:"2026-05-19", reg:157, att:46,  hr:5,  beta:0,  focus:"EE Navigator, NetBen, COBRA, NetEnroll, EWA, Paycards, Buy Now Pay Later" },
-  { name:"Perform & Manage",     type:"Inside Netchex",  date:"2026-05-21", reg:157, att:38,  hr:3,  beta:3,  focus:"Performance, Learn, Compensation Management, Violation Points, Disciplinary Actions" },
-  { name:"Engage & Retain",      type:"Inside Netchex",  date:"2026-05-26", reg:153, att:24,  hr:7,  beta:0,  focus:"Rewards & Recognition, Announcements, Conversations/Chat, Surveys, Anonymous Reporting" },
-  { name:"HR & Compliance Ops",  type:"Inside Netchex",  date:"2026-05-28", reg:189, att:36,  hr:0,  beta:8,  focus:"FMLA, Report Builder, Handbook Mgmt" },
-  { name:"Report Builder",       type:"Product Training", date:"2026-05-22", reg:115, att:53,  hr:33, beta:0,  focus:"Report Builder, Publisher Migration, GL Reports" },
-  { name:"Scheduler",            type:"Product Training", date:"2026-05-27", reg:null,att:null,hr:0,  beta:0,  focus:"Scheduler" },
-  { name:"Big Picture Client",   type:"Big Picture",      date:"2026-05-29", reg:31,  att:13,  hr:3,  beta:0,  focus:"Full Platform Overview, Cross-sell" },
-  { name:"Hire & Onboard: From Application to Day One", type:"Inside Netchex", date:"2026-06-09", reg:162, att:34, hr:7, beta:6, focus:"New Onboarding Experience, Pending Employee, E-Verify, Recruit",
-    betaProducts:[{product:"New Onboarding Experience",count:6},{product:"Pending Employee",count:6}] },
-  { name:"June Pay & Time: Get Payroll Right Every Time", type:"Inside Netchex", date:"2026-06-11", reg:149, att:26, hr:2, beta:5, focus:"OneScreen Payroll, Payroll Enhancements, Time & Attendance, Scheduler, Manager Timecard Approval",
-    betaProducts:[{product:"OneScreen Payroll & Payroll Enhancements",count:4},{product:"Timecard Approval / Manager Timecard Features",count:1}] },
-  { name:"June Benefits & Financial Wellness", type:"Inside Netchex", date:"2026-06-16", reg:149, att:23, hr:5, beta:2, focus:"Employee Navigator, NetBenefits, COBRA, ACA Compliance, Total Compensation Statements, EWA, Paycards, Buy Now Pay Later, 401K, NetEnroll",
-    betaProducts:[{product:"401K Integration (90+ Providers)",count:2}] },
-  { name:"June: The Big Picture – HR, Payroll & Beyond", type:"Big Picture", date:"2026-06-17", reg:58, att:17, hr:6, beta:1, focus:"One Screen Payroll, Integrations, Report Builder/Insights, Earn Wage Access, Buy Now Pay Later, AskHR, AI Performance Coach, AI Screener, Onboarding, Recruiting, Workplace Communication (beta), FMLA Dashboard (beta)",
-    betaProducts:[{product:"Workflows",count:1}] },
-  { name:"June: Manage & Develop: Better Managers, Better Teams", type:"Inside Netchex", date:"2026-06-18", reg:151, att:17, hr:5, beta:1, focus:"Performance, Coaching, Compensation Management, Violation Points, Disciplinary Actions, Reviews & Disciplinary Notes in Document Center",
-    betaProducts:[{product:"Reviews & Disciplinary Notes in Document Center",count:1}] },
-  { name:"June: Engage & Retain", type:"Inside Netchex", date:"2026-06-23", reg:154, att:15, hr:4, beta:0, focus:"Rewards & Recognition, Announcements, Conversations/Chat, Surveys, Anonymous Reporting" },
+  {
+    name:"Hire & Onboard", type:"Inside Netchex", date:"2026-05-12",
+    reg:244, att:119, hr:13, beta:63,
+    focus:"Recruit, The Work Number, E-Verify, Onboarding, Org Charts",
+    handraiserList:[
+      {name:"Brianna Lombardi",    company:"Ivy Hospitality LLC",            title:"Talent Experience Manager"},
+      {name:"Phillip Hutchins",    company:"Pontchartrain Conservancy",       title:"Accounting Manager"},
+      {name:"Sherri Goins",        company:"Kirkpatrick Oil Co.",             title:"Director Human Resources"},
+      {name:"Dana Vande Hey",      company:"Kayser Chevrolet Inc",            title:"Office Manager"},
+      {name:"Elise Fleming",       company:"GMW",                             title:"Manager Human Resources"},
+      {name:"Sylvia Hunt",         company:"Coastal Auto Partners LLC",       title:"TBD"},
+      {name:"Krystina Seriki",     company:"The Clifton School",              title:"Assistant Director"},
+      {name:"Taylor Shearer",      company:"Malone Office Environments",      title:"Customer Service"},
+      {name:"Trace Austin Cotten", company:"US Roofing Systems, LLC",         title:"Business Manager Operations"},
+      {name:"Kevin Kim",           company:"MCC Hospitality LLC",             title:"General Manager"},
+      {name:"Tito Montes",         company:"MedNOW Clinics",                  title:"Sr. Manager Human Resources"},
+      {name:"Joel Osmelowski",     company:"CA Inc.",                         title:"Manager Human Resources"},
+      {name:"Kimberly Francois",   company:"Northeast Florida Healthy Start", title:"Human Resource Director"},
+    ],
+    handraiserProducts:[{product:"Recruit",count:14}],
+    betaProducts:[{product:"New Onboarding & Workflows",count:63},{product:"Pending Employee",count:63}],
+  },
+  {name:"Pay & Time", type:"Inside Netchex", date:"2026-05-14", reg:185, att:74, hr:12, beta:11,
+    focus:"Payroll/OneScreen, Time & Attendance, Scheduler, Clock, POS Integrations, 401k",
+    handraiserProducts:[{product:"Scheduler",count:3}],
+    betaProducts:[{product:"FMLA Tracking",count:11}]},
+  {name:"Benefits", type:"Inside Netchex", date:"2026-05-19", reg:157, att:46, hr:5, beta:0,
+    focus:"EE Navigator, NetBen, COBRA, NetEnroll, EWA, Paycards, Buy Now Pay Later",
+    handraiserProducts:[{product:"Paycards",count:4},{product:"Netchex 401K",count:2}]},
+  {name:"Perform & Manage", type:"Inside Netchex", date:"2026-05-21", reg:157, att:38, hr:3, beta:3,
+    focus:"Performance, Learn, Compensation Management, Violation Points, Disciplinary Actions",
+    handraiserProducts:[{product:"Performance",count:3},{product:"Violation Points",count:2},{product:"Disciplinary Actions",count:2}],
+    betaProducts:[{product:"Effective-Dated Compensation",count:3}]},
+  {name:"Engage & Retain", type:"Inside Netchex", date:"2026-05-26", reg:153, att:24, hr:7, beta:0,
+    focus:"Rewards & Recognition, Announcements, Conversations/Chat, Surveys, Anonymous Reporting",
+    handraiserProducts:[{product:"Rewards",count:6},{product:"Announcements",count:6},{product:"Conversations",count:6},{product:"Surveys",count:7}]},
+  {name:"HR & Compliance Ops", type:"Inside Netchex", date:"2026-05-28", reg:189, att:36, hr:0, beta:8,
+    focus:"FMLA, Report Builder, Handbook Mgmt",
+    betaProducts:[{product:"FMLA Tracking",count:8},{product:"Describe a Report",count:8}]},
+  {name:"Report Builder", type:"Product Training", date:"2026-05-22", reg:115, att:53, hr:33, beta:0,
+    focus:"Report Builder, Publisher Migration, GL Reports",
+    handraiserProducts:[{product:"Import/Describe a Report",count:33}]},
+  {name:"Scheduler", type:"Product Training", date:"2026-05-27", reg:null,att:null,hr:0,beta:0, focus:"Scheduler"},
+  {name:"Big Picture Client", type:"Big Picture", date:"2026-05-29", reg:31, att:13, hr:3, beta:0,
+    focus:"Full Platform Overview, Cross-sell",
+    handraiserProducts:[{product:"Onboarding & Workflows",count:2},{product:"new Onboarding",count:1},{product:"Scheduler",count:1},{product:"Recruit",count:1},{product:"Surveys",count:1},{product:"Insights",count:1},{product:"Netchex AI",count:1},{product:"Perform",count:1},{product:"Learning",count:1}]},
+  {name:"Hire & Onboard: From Application to Day One", type:"Inside Netchex", date:"2026-06-09", reg:162, att:34, hr:7, beta:6,
+    focus:"New Onboarding Experience, Pending Employee, E-Verify, Recruit",
+    betaProducts:[{product:"New Onboarding Experience",count:6},{product:"Pending Employee",count:6}],
+    handraiserProducts:[{product:"Onboard",count:6},{product:"E-Verify",count:4},{product:"Recruit",count:4}]},
+  {name:"June Pay & Time: Get Payroll Right Every Time", type:"Inside Netchex", date:"2026-06-11", reg:149, att:26, hr:2, beta:5,
+    focus:"OneScreen Payroll, Payroll Enhancements, Time & Attendance, Scheduler, Manager Timecard Approval",
+    betaProducts:[{product:"OneScreen Payroll & Payroll Enhancements",count:4},{product:"Timecard Approval / Manager Timecard Features",count:1}],
+    handraiserProducts:[{product:"Scheduler",count:1}]},
+  {name:"June Benefits & Financial Wellness", type:"Inside Netchex", date:"2026-06-16", reg:149, att:23, hr:5, beta:2,
+    focus:"Employee Navigator, NetBenefits, COBRA, ACA Compliance, Total Compensation Statements, EWA, Paycards, Buy Now Pay Later, 401K, NetEnroll",
+    betaProducts:[{product:"401K Integration (Beta)",count:2}],
+    handraiserProducts:[{product:"ENavigator",count:3},{product:"NetBenefits",count:1},{product:"NetEnroll",count:1},{product:"Workers Comp",count:1},{product:"Netchex 401K",count:2}]},
+  {name:"June: The Big Picture – HR, Payroll & Beyond", type:"Big Picture", date:"2026-06-17", reg:58, att:17, hr:6, beta:1,
+    focus:"One Screen Payroll, Integrations, Report Builder/Insights, Earn Wage Access, Buy Now Pay Later, AskHR, AI Performance Coach, AI Screener, Onboarding, Recruiting, Workplace Communication (beta), FMLA Dashboard (beta)",
+    betaProducts:[{product:"Workflows",count:1}],
+    handraiserProducts:[{product:"Onboarding",count:4},{product:"Payroll",count:4},{product:"Performance",count:3},{product:"Learn & Develop",count:3},{product:"HR Ops & Reporting",count:3},{product:"Benefits",count:3},{product:"Hiring",count:3},{product:"Time",count:2},{product:"Engagement",count:2},{product:"Employee Navigator",count:2},{product:"Reynolds and Reynolds",count:1}]},
+  {name:"June: Manage & Develop: Better Managers, Better Teams", type:"Inside Netchex", date:"2026-06-18", reg:151, att:17, hr:5, beta:1,
+    focus:"Performance, Coaching, Compensation Management, Violation Points, Disciplinary Actions, Reviews & Disciplinary Notes in Document Center",
+    betaProducts:[{product:"Reviews & Disciplinary Notes in Document Center",count:2}],
+    handraiserProducts:[{product:"Disciplinary Actions",count:4},{product:"Performance",count:2},{product:"Comp Management",count:2},{product:"Violation Points",count:2},{product:"Learn",count:2}]},
+  {name:"June: Engage & Retain", type:"Inside Netchex", date:"2026-06-23", reg:154, att:15, hr:4, beta:0,
+    focus:"Rewards & Recognition, Announcements, Conversations/Chat, Surveys, Anonymous Reporting",
+    handraiserProducts:[{product:"Rewards",count:2},{product:"Announcements",count:2},{product:"Conversations",count:2},{product:"Surveys",count:2}]},
+  {name:"June: HR & Compliance Ops", type:"Inside Netchex", date:"2026-06-25", reg:160, att:20, hr:3, beta:0,
+    focus:"Document Center, Certification Dashboard, Workflows, Insights, AskHR, Mineral",
+    handraiserProducts:[{product:"Mineral",count:2},{product:"Document Center",count:3},{product:"Insights",count:1},{product:"AskHR",count:1}]},
+  {name:"The Big Picture: How Netchex Helps You Win in HR", type:"Big Picture", date:"2026-06-25", reg:34, att:5, hr:0, beta:0,
+    focus:"Prospect-focused · One Screen Payroll, AI Tools, Integrations, Onboarding, Recruiting, FMLA, Report Builder"},
+  {name:"Product Training: AskHR", type:"Product Training", date:"2026-06-26", reg:455, att:54, hr:21, beta:0,
+    focus:"AskHR AI",
+    handraiserProducts:[{product:"AskHR AI",count:21}]},
 ];
 
 let filtered = [...ALL_DATA];
 let activeKpi = null;
 let trendChart = null;
+const FILLS = {att:'fill-navy',hr:'fill-teal',beta:'fill-amber',reg:'fill-green'};
 
-const FILLS = { att:'fill-navy', hr:'fill-teal', beta:'fill-amber', reg:'fill-green' };
-
-function applyFilters() {
-  const type = document.getElementById('typeFilter').value;
-  const from = document.getElementById('dateFrom').value;
-  const to   = document.getElementById('dateTo').value;
-  filtered = ALL_DATA.filter(w =>
-    (type === 'all' || w.type === type) &&
-    (!from || w.date >= from) &&
-    (!to   || w.date <= to)
-  );
-  renderKPIs(); renderCards(); renderChart();
-  const n = filtered.length, T = ALL_DATA.length;
-  document.getElementById('filterCount').textContent = n === T ? 'All ' + T : n + ' of ' + T + ' webinars';
-  if (activeKpi) renderDetailTable(activeKpi);
-  const months = [...new Set(filtered.map(w=>w.date.slice(0,7)))];
-  document.getElementById('headerBadge').textContent = months.length === 1 ? fmtMonth(months[0]) : months.length + ' months';
-}
-
-function fmtMonth(ym) {
-  const d = new Date(ym+'-15');
-  return d.toLocaleDateString('en-US',{month:'long',year:'numeric'});
-}
-
-function renderKPIs() {
-  const att  = filtered.reduce((s,w)=>s+(w.att||0),0);
-  const hr   = filtered.reduce((s,w)=>s+(w.hr||0),0);
-  const beta = filtered.reduce((s,w)=>s+(w.beta||0),0);
-  const reg  = filtered.reduce((s,w)=>s+(w.reg||0),0);
-  const rate = reg > 0 ? Math.round(att/reg*100) : 0;
-  const n    = filtered.length;
-  document.getElementById('kv-att').textContent  = att.toLocaleString();
-  document.getElementById('kv-hr').textContent   = hr.toLocaleString();
-  document.getElementById('kv-beta').textContent = beta.toLocaleString();
-  document.getElementById('kv-reg').textContent  = reg.toLocaleString();
-  document.getElementById('ks-att').textContent  = n + ' webinar' + (n!==1?'s':'');
-  document.getElementById('ks-reg').textContent  = 'attend. rate: ' + rate + '%';
-  document.getElementById('kpiSub').textContent  = n + ' webinar' + (n!==1?'s':'') + ' in view';
-}
-
-function typePill(t) {
-  if (t==='Inside Netchex')   return '<span class="type-pill pill-in">Inside Netchex</span>';
-  if (t==='Product Training') return '<span class="type-pill pill-pt">Product Training</span>';
+/* ── Helpers ─────────────────────────────────── */
+function fmtMonth(ym){const d=new Date(ym+'-15');return d.toLocaleDateString('en-US',{month:'long',year:'numeric'});}
+function typePill(t){
+  if(t==='Inside Netchex')return '<span class="type-pill pill-in">Inside Netchex</span>';
+  if(t==='Product Training')return '<span class="type-pill pill-pt">Product Training</span>';
   return '<span class="type-pill pill-bp">Big Picture</span>';
 }
-function stripeClass(t) {
-  if (t==='Inside Netchex')   return 'stripe-in';
-  if (t==='Product Training') return 'stripe-pt';
+function stripeClass(t){
+  if(t==='Inside Netchex')return 'stripe-in';
+  if(t==='Product Training')return 'stripe-pt';
   return 'stripe-bp';
 }
+function trunc(s,n){return s.length>n?s.slice(0,n)+'…':s;}
+function seriesOf(w){ const m=w.date.slice(0,7); return m==='2026-05'?'May':(m==='2026-06'?'June':null); }
 
-function renderCards() {
-  const grid = document.getElementById('cardsGrid');
-  if (!filtered.length) {
-    grid.innerHTML = '<div class="no-results"><i class="ti ti-inbox" style="font-size:22px;display:block;margin-bottom:8px;"></i>No webinars match the current filters.</div>';
-    return;
-  }
-  grid.innerHTML = filtered.map(w => {
-    const rate = (w.reg && w.att) ? Math.round(w.att/w.reg*100) : null;
-    const ds = new Date(w.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-    return `<div class="wcard">
-      <div class="wcard-stripe ${stripeClass(w.type)}"></div>
-      <div class="wcard-body">
-        <div class="wcard-top">
-          <div class="wcard-name">${w.name}</div>
-          ${typePill(w.type)}
-        </div>
-        <div class="wcard-date"><i class="ti ti-calendar" style="font-size:11px;vertical-align:-1px;margin-right:3px;" aria-hidden="true"></i>${ds}</div>
-        <div class="metric-row">
-          <div class="metric-cell">
-            <div class="metric-num num-att">${w.att!=null ? w.att : '<span class="num-na">—</span>'}</div>
-            <div class="metric-lbl">attendees</div>
-          </div>
-          <div class="metric-cell">
-            <div class="metric-num num-hr">${w.hr}${w.att ? '<span class="metric-pct"> (' + Math.round(w.hr/w.att*100) + '%)</span>' : ''}</div>
-            <div class="metric-lbl">handraisers</div>
-          </div>
-          <div class="metric-cell">
-            <div class="metric-num num-beta">${w.beta}${w.att && w.beta ? '<span class="metric-pct"> (' + Math.round(w.beta/w.att*100) + '%)</span>' : ''}</div>
-            <div class="metric-lbl">beta</div>
-          </div>
-        </div>
-        <div class="rate-row">
-          ${rate != null
-            ? `<div class="rate-track"><div class="rate-fill" style="width:${rate}%"></div></div>
-               <div class="rate-text">${rate}% attendance rate &nbsp;&middot;&nbsp; ${(w.reg||0).toLocaleString()} registered</div>`
-            : `<div class="rate-text" style="font-style:italic;">attendance data pending</div>`}
-        </div>
-        <div class="focus-block">
-          <div class="focus-lbl">products covered</div>
-          <div class="focus-text">${w.focus}</div>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
+/* ── Filters ─────────────────────────────────── */
+function applyFilters(){
+  const type=document.getElementById('typeFilter').value;
+  const from=document.getElementById('dateFrom').value;
+  const to=document.getElementById('dateTo').value;
+  filtered=ALL_DATA.filter(w=>(type==='all'||w.type===type)&&(!from||w.date>=from)&&(!to||w.date<=to));
+  renderKPIs();renderCards();renderChart();renderProductTables();
+  const n=filtered.length,T=ALL_DATA.length;
+  document.getElementById('filterCount').textContent=n===T?'All '+T:n+' of '+T+' webinars';
+  if(activeKpi)renderDetailTable(activeKpi);
+  const months=[...new Set(filtered.map(w=>w.date.slice(0,7)))];
+  document.getElementById('headerBadge').textContent=months.length===1?fmtMonth(months[0]):months.length+' months';
 }
 
-function renderDetailTable(kpi) {
-  if (kpi === 'beta') {
-    document.getElementById('detailTitle').textContent = 'Beta sign-ups by product';
-    const productMap = {};
-    const productWebinars = {};
-    let noDetailCount = 0;
-    let noDetailTotal = 0;
-    filtered.forEach(w => {
-      if (w.betaProducts && w.betaProducts.length > 0) {
-        w.betaProducts.forEach(p => {
-          if (!productMap[p.product]) { productMap[p.product] = 0; productWebinars[p.product] = []; }
-          productMap[p.product] += p.count;
-          productWebinars[p.product].push(w.name);
-        });
-      } else if (w.beta > 0) {
-        noDetailCount++;
-        noDetailTotal += w.beta;
-      }
+/* ── Attendance KPIs ─────────────────────────── */
+function renderKPIs(){
+  const att=filtered.reduce((s,w)=>s+(w.att||0),0);
+  const hr=filtered.reduce((s,w)=>s+(w.hr||0),0);
+  const beta=filtered.reduce((s,w)=>s+(w.beta||0),0);
+  const reg=filtered.reduce((s,w)=>s+(w.reg||0),0);
+  const rate=reg>0?Math.round(att/reg*100):0;
+  const n=filtered.length;
+  document.getElementById('kv-att').textContent=att.toLocaleString();
+  document.getElementById('kv-hr').textContent=hr.toLocaleString();
+  document.getElementById('kv-beta').textContent=beta.toLocaleString();
+  document.getElementById('kv-reg').textContent=reg.toLocaleString();
+  document.getElementById('ks-att').textContent=n+' webinar'+(n!==1?'s':'');
+  document.getElementById('ks-reg').textContent='attend. rate: '+rate+'%';
+  document.getElementById('kpiSub').textContent=n+' webinar'+(n!==1?'s':'')+' in view';
+}
+
+function renderDetailTable(kpi){
+  if(kpi==='beta'){
+    document.getElementById('detailTitle').textContent='Beta sign-ups by product';
+    const pm={},pw={};let ndc=0,ndt=0;
+    filtered.forEach(w=>{
+      if(w.betaProducts&&w.betaProducts.length>0){w.betaProducts.forEach(p=>{if(!pm[p.product]){pm[p.product]=0;pw[p.product]=[];}pm[p.product]+=p.count;pw[p.product].push(w.name);});}
+      else if(w.beta>0){ndc++;ndt+=w.beta;}
     });
-    const products = Object.entries(productMap).sort((a,b) => b[1] - a[1]);
-    const maxCount = products.length > 0 ? products[0][1] : 1;
-    let noteRow = '';
-    if (noDetailCount > 0) {
-      noteRow = `<tr><td colspan="3" class="detail-note">${noDetailTotal.toLocaleString()} additional sign-up${noDetailTotal!==1?'s':''} from ${noDetailCount} webinar${noDetailCount!==1?'s':''} without product-level breakdown</td></tr>`;
-    }
-    document.getElementById('detailTable').innerHTML =
-      `<thead><tr><th>Product</th><th style="text-align:right;padding-right:12px;">Sign-ups</th><th style="min-width:110px;">Volume</th></tr></thead>
-      <tbody>` +
-      (products.length > 0
-        ? products.map(([product, count]) => {
-            const pct = Math.round(count / maxCount * 100);
-            const webinarList = productWebinars[product].join(', ');
-            return `<tr>
-              <td>
-                <span class="product-tag">${product}</span>
-                <div style="font-size:10px;color:var(--color-text-tertiary);margin-top:3px;">${webinarList}</div>
-              </td>
-              <td style="text-align:right;padding-right:12px;font-weight:500;">${count}</td>
-              <td><div class="bar-cell"><div class="mini-bar"><div class="mini-bar-fill fill-amber" style="width:${pct}%"></div></div>
-                <span style="font-size:11px;color:var(--color-text-tertiary);min-width:26px;">${count}</span></div></td>
-            </tr>`;
-          }).join('')
-        : '<tr><td colspan="3" style="text-align:center;padding:12px;color:var(--color-text-tertiary);">No product-level beta data in current view</td></tr>'
-      ) +
-      noteRow +
-      `</tbody>`;
+    const products=Object.entries(pm).sort((a,b)=>b[1]-a[1]);
+    const mx=products.length>0?products[0][1]:1;
+    const noteRow=ndc>0?`<tr><td colspan="3" class="detail-note">${ndt} additional sign-up${ndt!==1?'s':''} from ${ndc} webinar${ndc!==1?'s':''} without product-level breakdown</td></tr>`:'';
+    document.getElementById('detailTable').innerHTML=
+      `<thead><tr><th>Product</th><th style="text-align:right;padding-right:12px;">Sign-ups</th><th style="min-width:110px;">Volume</th></tr></thead><tbody>`+
+      (products.length>0?products.map(([p,c])=>{const pct=Math.round(c/mx*100);return`<tr><td><span class="product-tag">${p}</span><div style="font-size:10px;color:var(--color-text-tertiary);margin-top:3px;">${pw[p].join(', ')}</div></td><td style="text-align:right;padding-right:12px;font-weight:500;">${c}</td><td><div class="bar-cell"><div class="mini-bar"><div class="mini-bar-fill fill-amber" style="width:${pct}%"></div></div><span style="font-size:11px;color:var(--color-text-tertiary);min-width:26px;">${c}</span></div></td></tr>`;}).join(''):'<tr><td colspan="3" style="text-align:center;padding:12px;color:var(--color-text-tertiary);">No product-level beta data in current view</td></tr>')+
+      noteRow+'</tbody>';
     return;
   }
-  const titles = { att:'Attendees breakdown', hr:'Handraisers breakdown', reg:'Registrations breakdown' };
-  document.getElementById('detailTitle').textContent = titles[kpi];
-  const sorted = [...filtered].sort((a,b)=>(b[kpi]||0)-(a[kpi]||0));
-  const total  = filtered.reduce((s,w)=>s+(w[kpi]||0),0);
-  const fill   = FILLS[kpi];
-  document.getElementById('detailTable').innerHTML =
-    `<thead><tr><th>Webinar</th><th>Type</th><th style="text-align:right;padding-right:12px;">Count</th><th style="min-width:110px;">Share</th></tr></thead>
-    <tbody>` + sorted.map(w => {
-      const v = w[kpi]||0, p = total>0 ? Math.round(v/total*100) : 0;
-      return `<tr>
-        <td>${w.name}</td>
-        <td>${typePill(w.type)}</td>
-        <td style="text-align:right;padding-right:12px;font-weight:500;">${v}</td>
-        <td><div class="bar-cell"><div class="mini-bar"><div class="mini-bar-fill ${fill}" style="width:${p}%"></div></div>
-          <span style="font-size:11px;color:var(--color-text-tertiary);min-width:26px;">${p}%</span></div></td>
-      </tr>`;
-    }).join('') +
-    `<tr class="total-row"><td colspan="2" style="padding-left:10px;color:var(--color-text-secondary);">Total</td>
-      <td style="text-align:right;padding-right:12px;">${total.toLocaleString()}</td><td></td></tr></tbody>`;
+  const titles={att:'Attendees breakdown',hr:'Handraisers breakdown',reg:'Registrations breakdown'};
+  document.getElementById('detailTitle').textContent=titles[kpi];
+  const types=['Inside Netchex','Product Training','Big Picture'];
+  const rows=types.map(t=>{
+    const ws=filtered.filter(w=>w.type===t);
+    const may=ws.filter(w=>seriesOf(w)==='May').reduce((s,w)=>s+(w[kpi]||0),0);
+    const june=ws.filter(w=>seriesOf(w)==='June').reduce((s,w)=>s+(w[kpi]||0),0);
+    return {type:t, may, june, total:may+june, n:ws.length};
+  }).filter(r=>r.n>0).sort((a,b)=>b.total-a.total);
+  const grandMay=rows.reduce((s,r)=>s+r.may,0);
+  const grandJune=rows.reduce((s,r)=>s+r.june,0);
+  document.getElementById('detailTable').innerHTML=
+    `<thead><tr><th>Webinar Type</th><th style="text-align:right;">May</th><th style="text-align:right;">June</th><th style="text-align:right;padding-right:12px;">Total</th></tr></thead><tbody>`+
+    (rows.length?rows.map(r=>`<tr><td>${typePill(r.type)}</td><td style="text-align:right;">${r.may.toLocaleString()}</td><td style="text-align:right;">${r.june.toLocaleString()}</td><td style="text-align:right;padding-right:12px;font-weight:500;">${r.total.toLocaleString()}</td></tr>`).join(''):'<tr><td colspan="4" style="text-align:center;padding:12px;color:var(--color-text-tertiary);">No data in current view</td></tr>')+
+    `<tr class="total-row"><td style="padding-left:10px;color:var(--color-text-secondary);">Total</td><td style="text-align:right;">${grandMay.toLocaleString()}</td><td style="text-align:right;">${grandJune.toLocaleString()}</td><td style="text-align:right;padding-right:12px;">${(grandMay+grandJune).toLocaleString()}</td></tr></tbody>`;
 }
 
-function toggleDetail(kpi) {
-  if (activeKpi === kpi) { closeDetail(); return; }
-  activeKpi = kpi;
-  document.querySelectorAll('.kpi').forEach(c => c.classList.toggle('active', c.dataset.kpi===kpi));
+function toggleDetail(kpi){
+  if(activeKpi===kpi){closeDetail();return;}
+  activeKpi=kpi;
+  document.querySelectorAll('.kpi[data-kpi]').forEach(c=>c.classList.toggle('active',c.dataset.kpi===kpi));
   renderDetailTable(kpi);
   document.getElementById('detailPanel').classList.add('open');
 }
-function closeDetail() {
-  activeKpi = null;
+function closeDetail(){
+  activeKpi=null;
   document.getElementById('detailPanel').classList.remove('open');
-  document.querySelectorAll('.kpi').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('.kpi[data-kpi]').forEach(c=>c.classList.remove('active'));
 }
 
-function renderChart() {
-  const ctx = document.getElementById('trendChart').getContext('2d');
-  const s   = [...filtered].sort((a,b)=>a.date.localeCompare(b.date));
-  const labels   = s.map(w => new Date(w.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}) + ' · ' + w.name);
-  const attData  = s.map(w=>w.att||0);
-  const hrData   = s.map(w=>w.hr||0);
-  const betaData = s.map(w=>w.beta||0);
-  if (trendChart) trendChart.destroy();
-  trendChart = new Chart(ctx, {
+/* ── Webinar cards ───────────────────────────── */
+function renderCards(){
+  const grid=document.getElementById('cardsGrid');
+  if(!filtered.length){grid.innerHTML='<div class="no-results"><i class="ti ti-inbox" style="font-size:22px;display:block;margin-bottom:8px;"></i>No webinars match the current filters.</div>';return;}
+  grid.innerHTML=filtered.map(w=>{
+    const rate=(w.reg&&w.att)?Math.round(w.att/w.reg*100):null;
+    const ds=new Date(w.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    return`<div class="wcard"><div class="wcard-stripe ${stripeClass(w.type)}"></div><div class="wcard-body">
+      <div class="wcard-top"><div class="wcard-name">${w.name}</div>${typePill(w.type)}</div>
+      <div class="wcard-date"><i class="ti ti-calendar" style="font-size:11px;vertical-align:-1px;margin-right:3px;"></i>${ds}</div>
+      <div class="metric-row">
+        <div class="metric-cell"><div class="metric-num num-att">${w.att!=null?w.att:'<span class="num-na">—</span>'}</div><div class="metric-lbl">attendees</div></div>
+        <div class="metric-cell"><div class="metric-num num-hr">${w.hr}${w.att?'<span class="metric-pct"> ('+Math.round(w.hr/w.att*100)+'%)</span>':''}</div><div class="metric-lbl">handraisers</div></div>
+        <div class="metric-cell"><div class="metric-num num-beta">${w.beta}${w.att&&w.beta?'<span class="metric-pct"> ('+Math.round(w.beta/w.att*100)+'%)</span>':''}</div><div class="metric-lbl">beta</div></div>
+      </div>
+      <div class="rate-row">${rate!=null?`<div class="rate-track"><div class="rate-fill" style="width:${rate}%"></div></div><div class="rate-text">${rate}% attendance rate &nbsp;&middot;&nbsp; ${(w.reg||0).toLocaleString()} registered</div>`:`<div class="rate-text" style="font-style:italic;">attendance data pending</div>`}</div>
+      <div class="focus-block"><div class="focus-lbl">products covered</div><div class="focus-text">${w.focus}</div></div>
+    </div></div>`;
+  }).join('');
+}
+
+/* ── Chart ───────────────────────────────────── */
+function renderChart(){
+  const ctx=document.getElementById('trendChart').getContext('2d');
+  const s=[...filtered].sort((a,b)=>a.date.localeCompare(b.date));
+  const labels=s.map(w=>new Date(w.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})+' · '+w.name);
+  if(trendChart)trendChart.destroy();
+  trendChart=new Chart(ctx,{
     type:'bar',
-    data:{ labels, datasets:[
-      { label:'Attendees',    data:attData,  backgroundColor:'rgba(27,58,107,.8)',   stack:'att',     borderSkipped:false },
-      { label:'Handraisers',  data:hrData,   backgroundColor:'rgba(46,125,154,.85)', stack:'signals', borderSkipped:false },
-      { label:'Beta sign-ups',data:betaData, backgroundColor:'rgba(200,134,10,.8)',  stack:'signals', borderSkipped:false },
+    data:{labels,datasets:[
+      {label:'Attendees',    data:s.map(w=>w.att||0),  backgroundColor:'rgba(27,58,107,.8)',   stack:'att',     borderSkipped:false},
+      {label:'Handraisers',  data:s.map(w=>w.hr||0),   backgroundColor:'rgba(46,125,154,.85)', stack:'signals', borderSkipped:false},
+      {label:'Beta sign-ups',data:s.map(w=>w.beta||0), backgroundColor:'rgba(200,134,10,.8)',  stack:'signals', borderSkipped:false},
     ]},
     options:{
-      responsive:true, maintainAspectRatio:false,
-      interaction:{ mode:'index', intersect:false },
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
       plugins:{
-        legend:{ display:false },
+        legend:{display:false},
         tooltip:{
-          backgroundColor:'rgba(255,255,255,.97)', titleColor:'#101828',
-          bodyColor:'#667085', borderColor:'rgba(0,0,0,0.1)', borderWidth:1,
-          padding:10, cornerRadius:8,
+          backgroundColor:'rgba(255,255,255,.97)',titleColor:'#101828',bodyColor:'#667085',
+          borderColor:'rgba(0,0,0,0.1)',borderWidth:1,padding:10,cornerRadius:8,
           callbacks:{
-            title: items => items[0].label.split(' · ')[1] + ' (' + items[0].label.split(' · ')[0] + ')',
-            afterBody: items => {
-              const idx = items[0].dataIndex;
-              const w = s[idx];
-              const lines = [];
-              if (w.att) lines.push('HR rate: ' + Math.round(w.hr/w.att*100) + '% of attendees');
-              if (w.att && w.beta) lines.push('Beta rate: ' + Math.round(w.beta/w.att*100) + '% of attendees');
+            title:items=>items[0].label.split(' · ')[1]+' ('+items[0].label.split(' · ')[0]+')',
+            afterBody:items=>{
+              const w=s[items[0].dataIndex];const lines=[];
+              if(w.att)lines.push('HR rate: '+Math.round(w.hr/w.att*100)+'% of attendees');
+              if(w.att&&w.beta)lines.push('Beta rate: '+Math.round(w.beta/w.att*100)+'% of attendees');
               return lines;
             }
           }
         }
       },
       scales:{
-        x:{ stacked:true, ticks:{ font:{size:10}, autoSkip:false, maxRotation:38, color:'#888',
-              callback:(v,i)=>labels[i].split(' · ')[0]+' '+labels[i].split(' · ')[1] },
-            grid:{ display:false } },
-        y:{ stacked:true, beginAtZero:true, border:{display:false},
-            grid:{ color:'rgba(0,0,0,0.05)' },
-            ticks:{ font:{size:11}, color:'#888' } }
+        x:{stacked:true,ticks:{font:{size:10},autoSkip:false,maxRotation:38,color:'#888',callback:(v,i)=>labels[i].split(' · ')[0]+' '+labels[i].split(' · ')[1]},grid:{display:false}},
+        y:{stacked:true,beginAtZero:true,border:{display:false},grid:{color:'rgba(0,0,0,0.05)'},ticks:{font:{size:11},color:'#888'}}
       },
-      layout:{ padding:{ top:4 } }
+      layout:{padding:{top:4}}
     }
   });
-  const months = [...new Set(s.map(w=>w.date.slice(0,7)))];
-  document.getElementById('chartNote').textContent = months.length===1
-    ? 'Showing ' + s.length + ' webinar' + (s.length!==1?'s':'') + ' · ' + fmtMonth(months[0]) + '  ·  Add future months to see trends develop'
-    : 'Showing ' + s.length + ' webinars across ' + months.length + ' months';
+  const months=[...new Set(s.map(w=>w.date.slice(0,7)))];
+  document.getElementById('chartNote').textContent=months.length===1?'Showing '+s.length+' webinar'+(s.length!==1?'s':'')+' · '+fmtMonth(months[0])+'  ·  Add future months to see trends develop':'Showing '+s.length+' webinars across '+months.length+' months';
+}
+
+/* ── Product interest tables (by category, May vs June) ───── */
+// Inside Netchex webinars pair up by topic across May and June — broken out individually per the user's request.
+const INN_GROUPS = [
+  {label:"Hire & Onboard",                         names:["Hire & Onboard","Hire & Onboard: From Application to Day One"]},
+  {label:"Pay & Time",                             names:["Pay & Time","June Pay & Time: Get Payroll Right Every Time"]},
+  {label:"Benefits & Financial Wellness",          names:["Benefits","June Benefits & Financial Wellness"]},
+  {label:"Perform & Manage / Manage & Develop",    names:["Perform & Manage","June: Manage & Develop: Better Managers, Better Teams"]},
+  {label:"Engage & Retain",                        names:["Engage & Retain","June: Engage & Retain"]},
+  {label:"HR & Compliance Ops",                    names:["HR & Compliance Ops","June: HR & Compliance Ops"]},
+];
+function computeProductRows(webinars, field){
+  const may={}, june={};
+  webinars.forEach(w=>{
+    const s=seriesOf(w);
+    const arr=w[field];
+    if(!s||!arr)return;
+    const bucket = s==='May'?may:june;
+    arr.forEach(p=>{ bucket[p.product]=(bucket[p.product]||0)+p.count; });
+  });
+  const names=[...new Set([...Object.keys(may),...Object.keys(june)])];
+  return names.map(p=>({product:p, may:may[p]||0, june:june[p]||0, total:(may[p]||0)+(june[p]||0)})).sort((a,b)=>b.total-a.total);
+}
+function tableHTML(rows, fillClass){
+  const mx=rows.length?rows[0].total:1;
+  return `<thead><tr><th>Product</th><th style="text-align:right;">May</th><th style="text-align:right;">June</th><th style="text-align:right;padding-right:12px;">Total</th><th style="min-width:100px;">Volume</th></tr></thead><tbody>`+
+    (rows.length?rows.map(r=>{const pct=Math.round(r.total/mx*100);return`<tr><td><span class="product-tag">${r.product}</span></td><td style="text-align:right;">${r.may||'–'}</td><td style="text-align:right;">${r.june||'–'}</td><td style="text-align:right;padding-right:12px;font-weight:500;">${r.total}</td><td><div class="bar-cell"><div class="mini-bar"><div class="mini-bar-fill ${fillClass}" style="width:${pct}%"></div></div></div></td></tr>`;}).join(''):'<tr><td colspan="5" style="text-align:center;padding:12px;color:var(--color-text-tertiary);">No product data in current view</td></tr>')+
+    '</tbody>';
+}
+function renderProductTable(tableId, field, fillClass, typeFilter){
+  const rows=computeProductRows(filtered.filter(w=>w.type===typeFilter), field);
+  document.getElementById(tableId).innerHTML=tableHTML(rows, fillClass);
+}
+function renderInsideNetchexBreakout(containerId, field, fillClass){
+  const container=document.getElementById(containerId);
+  let html='';
+  INN_GROUPS.forEach(g=>{
+    const webinars=filtered.filter(w=>w.type==='Inside Netchex' && g.names.includes(w.name));
+    if(!webinars.length)return;
+    const rows=computeProductRows(webinars, field);
+    html+=`<div class="inn-group"><div class="cat-sublabel">${g.label}</div><div class="product-scroll"><table class="detail-table">${tableHTML(rows, fillClass)}</table></div></div>`;
+  });
+  container.innerHTML = html || '<div class="chart-note" style="text-align:left;">No Inside Netchex webinars in current view</div>';
+}
+function renderProductTables(){
+  renderInsideNetchexBreakout('hrProductInsideNetchex','handraiserProducts','fill-teal');
+  renderInsideNetchexBreakout('betaProductInsideNetchex','betaProducts','fill-amber');
+  renderProductTable('hrProductTable-pt','handraiserProducts','fill-teal','Product Training');
+  renderProductTable('betaProductTable-pt','betaProducts','fill-amber','Product Training');
+  renderProductTable('hrProductTable-bp','handraiserProducts','fill-teal','Big Picture');
+  renderProductTable('betaProductTable-bp','betaProducts','fill-amber','Big Picture');
 }
 
 applyFilters();
